@@ -140,8 +140,8 @@ def main():
         for i in range(len(variable)):
             for j in range(len(variable[i])):
                 way = ' - '.join(variable[i][j][1])
-                m.write(f'Из {i} в {j}; длина: {variable[i][j][0]}; путь: {way}\n')
-
+                m.write(f'Из {variable[i][1][1][0]} в {variable[i][j][-1][-1]}; длина: {variable[i][j][0]}; путь: {way}\n')
+            m.write("\n")
 
 if __name__ == '__main__':
     main()
