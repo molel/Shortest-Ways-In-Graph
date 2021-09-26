@@ -39,12 +39,10 @@ class Graph(object):
         seen = set()
         while len(queue) > 0:
             min_distance = float("inf")
-            min_node = None
             for n in queue:
                 if distance[n][0] < min_distance and n not in seen:
-                    min_distance = distance[n][0]
                     min_node = n
-            queue.remove(min_node)
+            # queue.remove(min_node)
             seen.add(min_node)
             connections = self.connections_from(min_node)
             for (vertex, weight) in connections:
@@ -108,7 +106,7 @@ def main():
         for stroke in matrix:
             first_matrix.append(stroke)
         for i in range(1, len(first_matrix)):
-            second_matrix.append(findall(r'-?\d+', first_matrix[i][2:]))
+            second_matrix.append(findall(r'-?\d+', first_matrix[i][2:] if i < 10 else first_matrix[i][3:]))
         graph = Graph(second_matrix, first_matrix[0])
 
     variable = graph.shortest_ways()
