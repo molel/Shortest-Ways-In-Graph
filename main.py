@@ -29,29 +29,54 @@ class Graph(object):
         return [(self.vertexes[col_num], self.data[minimum][col_num]) for col_num in range(self.size) if
                 self.data[minimum][col_num] != 0]
 
-    def dijkstra(self, start_point):
-        distance = [None] * self.size
-        for i in range(len(distance)):
-            distance[i] = [float("inf")]
-            distance[i].append([self.vertexes[start_point]])
-        distance[start_point][0] = 0
+    # def dijkstra(self, start_point):
+    #     distance = [None] * self.size
+    #     for i in range(len(distance)):
+    #         distance[i] = [float("inf")]
+    #         distance[i].append([self.vertexes[start_point]])
+    #     distance[start_point][0] = 0
+    #     queue = [i for i in range(self.size)]
+    #     seen = set()
+    #     while len(queue) > 0:
+    #         min_distance = float("inf")
+    #         for n in queue:
+    #             if distance[n][0] < min_distance and n not in seen:
+    #                 min_node = n
+    #         queue.remove(min_node)
+    #         seen.add(min_node)
+    #         connections = self.connections_from(min_node)
+    #         for (vertex, weight) in connections:
+    #             total_distance = weight + min_distance
+    #             if total_distance < distance[int(vertex)][0]:
+    #                 distance[int(vertex)][0] = total_distance
+    #                 distance[int(vertex)][1] = list(distance[min_node][1])
+    #                 distance[int(vertex)][1].append(vertex)
+    #     return distance
+    def dijkstra(self, start_point):            #надо понять :(
+        dist = [None] * self.size
+        for i in range(len(dist)):
+            dist[i] = [float("inf")]
+            dist[i].append([self.vertexes[start_point]])
+        dist[start_point][0] = 0
         queue = [i for i in range(self.size)]
         seen = set()
         while len(queue) > 0:
-            min_distance = float("inf")
+            min_dist = float("inf")
+            min_node = None
             for n in queue:
-                if distance[n][0] < min_distance and n not in seen:
+                if dist[n][0] < min_dist and n not in seen:
+                    min_dist = dist[n][0]
                     min_node = n
-            # queue.remove(min_node)
+            queue.remove(min_node)
             seen.add(min_node)
             connections = self.connections_from(min_node)
-            for (vertex, weight) in connections:
-                total_distance = weight + min_distance
-                if total_distance < distance[int(vertex)][0]:
-                    distance[int(vertex)][0] = total_distance
-                    distance[int(vertex)][1] = list(distance[min_node][1])
-                    distance[int(vertex)][1].append(vertex)
-        return distance
+            for (mount, weight) in connections:
+                tot_dist = weight + min_dist
+                if tot_dist < dist[int(mount)][0]:
+                    dist[int(mount)][0] = tot_dist
+                    dist[int(mount)][1] = list(dist[min_node][1])
+                    dist[int(mount)][1].append(mount)
+        return dist
 
     def shortest_ways(self, certain=False):  # сама функция нахождения путей
         if type(certain) == int:
